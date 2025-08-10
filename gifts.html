@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gift Opening Celebration</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    position: relative;
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    z-index: 2;
+  }
+
+  .gifts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    z-index: 2;
+  }
+
+  .gift {
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.25);
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+  .gift:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .gift img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  .gift:hover img {
+    transform: scale(1.05);
+  }
+
+  .gift-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    display: none;
+    width: 80%;
+    word-wrap: break-word;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    user-select: none;
+  }
+
+  /* Balloons from previous theme */
+  .balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ff6f91;
+    animation: float 6s ease-in-out infinite;
+    z-index: 1;
+  }
+
+   /* Balloon tail: straight then zigzag */
+  .balloon:before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    width: 2px;
+    height: 60px;
+    background:
+      linear-gradient(#555 0 14px, transparent 14px),
+      repeating-linear-gradient(
+        -45deg,
+        #555,
+        #555 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    background-size: 100% 14px, 100% 8px;
+    background-repeat: no-repeat, repeat;
+    background-position: 0 0, 0 14px;
+    transform: translateX(-50%);
+  }
+
+
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-300px) translateX(20px); }
+    100% { transform: translateY(-600px) translateX(-20px); }
+  }
+
+  @keyframes tailWave {
+    0%, 100% { transform: translateX(-50%) rotate(15deg); }
+    50% { transform: translateX(-50%) rotate(-15deg); }
+  }
+
+  @media (max-width: 500px) {
+    .gift {
+      min-height: 140px;
+    }
+    .gift-text {
+      font-size: 1rem;
+      padding: 10px 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>🎁 Time to Open Your Gifts! 🎉</h1>
+
+<div class="gifts-grid">
+  <div class="gift" data-gift="Teddy Bear">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Teddy Bear</div>
+  </div>
+  <div class="gift" data-gift="Smart Watch">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Smart Watch</div>
+  </div>
+  <div class="gift" data-gift="Perfume">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Perfume</div>
+  </div>
+  <div class="gift" data-gift="Headphones">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Headphones</div>
+  </div>
+  <div class="gift" data-gift="Laptop">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Laptop</div>
+  </div>
+  <div class="gift" data-gift="Chocolate Box">
+    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
+    <div class="gift-text">Chocolate Box</div>
+  </div>
+</div>
+
+<!-- Balloons -->
+<div class="balloon" style="left: 5%; background-color: #ff6f91; animation-delay: 0s;"></div>
+<div class="balloon" style="left: 20%; background-color: #ff9671; animation-delay: 2s;"></div>
+<div class="balloon" style="left: 40%; background-color: #ffc75f; animation-delay: 4s;"></div>
+<div class="balloon" style="left: 60%; background-color: #f9f871; animation-delay: 1s;"></div>
+<div class="balloon" style="left: 80%; background-color: #ffb6c1; animation-delay: 3s;"></div>
+
+<script>
+  document.querySelectorAll('.gift').forEach(gift => {
+    const img = gift.querySelector('img');
+    const text = gift.querySelector('.gift-text');
+
+    gift.addEventListener('click', () => {
+      img.style.display = 'none';    // hide gift box image
+      text.style.display = 'block';  // show gift name text
+    });
+  });
+</script>
+
+</body>
+</html>
