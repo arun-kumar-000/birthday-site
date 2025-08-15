@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cake Cutting Celebration</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    z-index: 2;
+  }
+
+  #instruction {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+    z-index: 2;
+  }
+
+  #cake-container {
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  #cake-img {
+    max-width: 90vw;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .emoji-row {
+    font-size: 2rem;
+    margin-top: 20px;
+    z-index: 2;
+  }
+
+  /* Balloons */
+  .balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ff6f91;
+    animation: float 6s ease-in-out infinite;
+    z-index: 1;
+  }
+
+ .balloon:before {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    width: 2px;
+    height: 60px;
+    background:
+      linear-gradient(#555 0 14px, transparent 14px),
+      repeating-linear-gradient(
+        -45deg,
+        #555,
+        #555 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    background-size: 100% 14px, 100% 8px;
+    background-repeat: no-repeat, repeat;
+    background-position: 0 0, 0 14px;
+    transform: translateX(-50%);
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-300px) translateX(20px); }
+    100% { transform: translateY(-600px) translateX(-20px); }
+  }
+
+  @keyframes tailWave {
+    0%, 100% { transform: translateX(-50%) rotate(15deg); }
+    50% { transform: translateX(-50%) rotate(-15deg); }
+  }
+
+  #nextBtn {
+    display: none;
+    margin-top: 25px;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎂 Make a wish… and blow out the candles! 🎉</h1>
+
+<div id="instruction">please click on the cake image</div>
+
+<div id="cake-container">
+  <img
+    id="cake-img"
+    src="https://i.pinimg.com/originals/13/07/b8/1307b8153968f6e9ce1020db5bab41e7.gif"
+    alt="Birthday Cake"
+  >
+</div>
+
+<button id="nextBtn" class="btn btn-lg btn-light shadow-lg">Next</button>
+
+<div class="emoji-row">🍰 🎈 🎁 🥳 🍓 🎊</div>
+
+<!-- Balloons -->
+<div class="balloon" style="left: 10%; background-color: #ff6f91; animation-delay: 0s;"></div>
+<div class="balloon" style="left: 30%; background-color: #ff9671; animation-delay: 2s;"></div>
+<div class="balloon" style="left: 50%; background-color: #ffc75f; animation-delay: 4s;"></div>
+<div class="balloon" style="left: 70%; background-color: #f9f871; animation-delay: 1s;"></div>
+<div class="balloon" style="left: 90%; background-color: #ffb6c1; animation-delay: 3s;"></div>
+
+<script>
+  const cake = document.getElementById('cake-img');
+  const nextBtn = document.getElementById('nextBtn');
+  const staticSrc = "https://i.pinimg.com/originals/13/07/b8/1307b8153968f6e9ce1020db5bab41e7.gif"; // Static cake
+  const gifSrc = "https://cdn.dribbble.com/userupload/21084824/file/original-7ee04aa5dc6a65f67f098ca7cc35b019.gif"; // Cake cutting GIF
+
+  cake.src = staticSrc; // Ensure starts as static
+  nextBtn.style.display = 'none'; // hide next initially
+
+  cake.addEventListener('click', () => {
+    cake.src = gifSrc;
+    nextBtn.style.display = 'none'; // hide next when cake clicked again
+
+    // After GIF duration, reset image and show next button
+    setTimeout(() => {
+      cake.src = staticSrc;
+      nextBtn.style.display = 'inline-block';
+    }, 4000); // GIF duration in ms
+  });
+
+  nextBtn.addEventListener('click', () => {
+    // Change this to your next page URL
+    window.location.href = "wishes.html";
+  });
+</script>
+
+</body>
+</html>

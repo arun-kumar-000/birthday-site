@@ -80,7 +80,7 @@
     user-select: none;
   }
 
-  /* Balloons from previous theme */
+  /* Balloons */
   .balloon {
     position: absolute;
     bottom: -150px;
@@ -92,7 +92,6 @@
     z-index: 1;
   }
 
-   /* Balloon tail: straight then zigzag */
   .balloon:before {
     content: '';
     position: absolute;
@@ -115,16 +114,10 @@
     transform: translateX(-50%);
   }
 
-
   @keyframes float {
     0% { transform: translateY(0) translateX(0); }
     50% { transform: translateY(-300px) translateX(20px); }
     100% { transform: translateY(-600px) translateX(-20px); }
-  }
-
-  @keyframes tailWave {
-    0%, 100% { transform: translateX(-50%) rotate(15deg); }
-    50% { transform: translateX(-50%) rotate(-15deg); }
   }
 
   @media (max-width: 500px) {
@@ -136,6 +129,17 @@
       padding: 10px 14px;
     }
   }
+
+  /* Final message */
+  #finalMessage {
+    display: none;
+    margin-top: 30px;
+    z-index: 2;
+    font-size: 1.5rem;
+    background: rgba(0,0,0,0.6);
+    padding: 15px 20px;
+    border-radius: 12px;
+  }
 </style>
 </head>
 <body>
@@ -143,31 +147,16 @@
 <h1>🎁 Time to Open Your Gifts! 🎉</h1>
 
 <div class="gifts-grid">
-  <div class="gift" data-gift="Teddy Bear">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Teddy Bear</div>
-  </div>
-  <div class="gift" data-gift="Smart Watch">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Smart Watch</div>
-  </div>
-  <div class="gift" data-gift="Perfume">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Perfume</div>
-  </div>
-  <div class="gift" data-gift="Headphones">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Headphones</div>
-  </div>
-  <div class="gift" data-gift="Laptop">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Laptop</div>
-  </div>
-  <div class="gift" data-gift="Chocolate Box">
-    <img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg" alt="Gift Box">
-    <div class="gift-text">Chocolate Box</div>
-  </div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
+  <div class="gift"><img src="https://img.freepik.com/free-photo/3d-illustration-closed-black-gift-box_107791-18203.jpg"><div class="gift-text"></div></div>
 </div>
+
+<!-- Final message -->
+<div id="finalMessage">🎉Tell me the gift you want, and it’s yours.🎉 <br> ❤️ Enjoy your day! ❤️</div>
 
 <!-- Balloons -->
 <div class="balloon" style="left: 5%; background-color: #ff6f91; animation-delay: 0s;"></div>
@@ -177,15 +166,42 @@
 <div class="balloon" style="left: 80%; background-color: #ffb6c1; animation-delay: 3s;"></div>
 
 <script>
-  document.querySelectorAll('.gift').forEach(gift => {
-    const img = gift.querySelector('img');
-    const text = gift.querySelector('.gift-text');
+let openedCount = 0;
+const totalGifts = document.querySelectorAll('.gift').length;
 
-    gift.addEventListener('click', () => {
-      img.style.display = 'none';    // hide gift box image
-      text.style.display = 'block';  // show gift name text
-    });
+// Messages for each gift click in order
+const messages = [
+  "Yeh khali hai 😜",
+  "Yeh bhi khali hai 😜",
+  "Yaha bhi kuch nahi 😏",
+  "Kisi mein kuch nahi hai 😅",
+  "Bola tha na, sab khali hain 😂",
+  "Yrr main hi gift hu. 😜"
+];
+
+document.querySelectorAll('.gift').forEach(gift => {
+  const img = gift.querySelector('img');
+  const text = gift.querySelector('.gift-text');
+
+  gift.addEventListener('click', () => {
+    if (!gift.classList.contains('opened')) {
+      gift.classList.add('opened');
+      img.style.display = 'none';
+
+      // Show message based on the sequence
+      text.textContent = messages[openedCount] || "Yeh bhi khali hai 😜";
+      text.style.display = 'block';
+      openedCount++;
+
+      // Show final message when all gifts are opened
+      if (openedCount === totalGifts) {
+        setTimeout(() => {
+          document.getElementById('finalMessage').style.display = 'block';
+        }, 1000);
+      }
+    }
   });
+});
 </script>
 
 </body>

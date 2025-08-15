@@ -75,9 +75,30 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   }
 
+  /* Title: smooth character-by-character reveal */
   h1 {
     font-size: 3rem;
     font-weight: bold;
+    min-height: 3.5rem; /* prevent layout shift before reveal */
+    margin: 0;
+  }
+  #birthdayTitle {
+    display: inline-block;
+    white-space: pre;
+  }
+  #birthdayTitle .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    will-change: transform, opacity;
+    animation: charIn 520ms cubic-bezier(.22,.61,.36,1) both;
+    animation-delay: calc(var(--i) * 45ms);
+  }
+  @keyframes charIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   #birthdayGif {
@@ -94,7 +115,7 @@
   }
 
   #nextBtn {
-    display: none; /* hidden until Surprise is clicked */
+    display: none;
     margin-top: 20px;
   }
 </style>
@@ -105,13 +126,31 @@
 <img id="birthdayGif" src="https://gifdb.com/images/high/bestie-friendship-hugs-jja9clkfgije5i82.webp" alt="Birthday Hug">
 
 <div class="centered text-center">
-  <h1>🎉 Happy Birthday! 🎉</h1>
+  <h1 id="birthdayTitle"></h1>
   <button id="wishBtn" class="btn btn-lg btn-light mt-3 shadow-lg">Click for Surprise!</button>
-  <a id="nextBtn" href="cake.html" class="btn btn-lg btn-light mt-3 shadow-lg">Next</a>
+  <a id="nextBtn" href="blow-candles.html" class="btn btn-lg btn-light mt-3 shadow-lg">Next</a>
 </div>
 
 <script>
-  // Create balloons
+  /* ---------- Smooth heading reveal ---------- */
+  const titleText = "🎉 Happy Birthday Madam Jii! 🎉";
+  const titleEl = document.getElementById("birthdayTitle");
+
+  function showTitleSmooth(text) {
+    titleEl.innerHTML = ""; // clear
+    // Use Array.from to keep emojis intact
+    Array.from(text).forEach((ch, i) => {
+      const span = document.createElement("span");
+      span.className = "char";
+      span.style.setProperty("--i", i);
+      span.textContent = ch;
+      titleEl.appendChild(span);
+    });
+  }
+  // start after a short delay
+  setTimeout(() => showTitleSmooth(titleText), 1300);
+
+  /* ---------- Balloons ---------- */
   const colors = ['#ff69b4', '#ff1493', '#ff85a1', '#ffc0cb', '#ff6f91'];
   for (let i = 0; i < 20; i++) {
     let b = document.createElement('div');
@@ -122,7 +161,7 @@
     document.body.appendChild(b);
   }
 
-  // Fireworks setup
+  /* ---------- Fireworks ---------- */
   const canvas = document.getElementById('fireworks');
   const ctx = canvas.getContext('2d');
   let particles = [];
@@ -184,7 +223,7 @@
   }
   animateFireworks();
 
-  // Button behavior
+  /* ---------- Button behavior ---------- */
   const btn = document.getElementById('wishBtn');
   const nextBtn = document.getElementById('nextBtn');
   const gif = document.getElementById('birthdayGif');
