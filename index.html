@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Happy Birthday!</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
@@ -20,7 +20,7 @@
     width: 60px;
     height: 80px;
     background: radial-gradient(circle at 30% 30%, #ff69b4, #ff1493);
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50%;
     animation: float 8s ease-in-out infinite;
     pointer-events: none;
     z-index: 2;
@@ -73,18 +73,20 @@
     flex-direction: column;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    padding: 15px;
+    text-align: center;
   }
 
-  /* Title: smooth character-by-character reveal */
   h1 {
     font-size: 3rem;
     font-weight: bold;
-    min-height: 3.5rem; /* prevent layout shift before reveal */
+    min-height: 3.5rem;
     margin: 0;
   }
   #birthdayTitle {
     display: inline-block;
     white-space: pre;
+    word-break: break-word;
   }
   #birthdayTitle .char {
     display: inline-block;
@@ -118,6 +120,39 @@
     display: none;
     margin-top: 20px;
   }
+
+  /* ---------- Responsive adjustments ---------- */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+      min-height: 2.3rem;
+    }
+    .balloon {
+      width: 40px;
+      height: 55px;
+    }
+    .balloon:before {
+      height: 40px;
+    }
+    .btn {
+      font-size: 1rem !important;
+      padding: 8px 16px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem;
+      min-height: 1.8rem;
+    }
+    .centered {
+      padding: 10px;
+    }
+    .btn {
+      font-size: 0.9rem !important;
+      padding: 6px 12px !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -132,13 +167,11 @@
 </div>
 
 <script>
-  /* ---------- Smooth heading reveal ---------- */
   const titleText = "🎉 Happy Birthday Madam Jii! 🎉";
   const titleEl = document.getElementById("birthdayTitle");
 
   function showTitleSmooth(text) {
-    titleEl.innerHTML = ""; // clear
-    // Use Array.from to keep emojis intact
+    titleEl.innerHTML = "";
     Array.from(text).forEach((ch, i) => {
       const span = document.createElement("span");
       span.className = "char";
@@ -147,10 +180,8 @@
       titleEl.appendChild(span);
     });
   }
-  // start after a short delay
   setTimeout(() => showTitleSmooth(titleText), 1300);
 
-  /* ---------- Balloons ---------- */
   const colors = ['#ff69b4', '#ff1493', '#ff85a1', '#ffc0cb', '#ff6f91'];
   for (let i = 0; i < 20; i++) {
     let b = document.createElement('div');
@@ -161,7 +192,6 @@
     document.body.appendChild(b);
   }
 
-  /* ---------- Fireworks ---------- */
   const canvas = document.getElementById('fireworks');
   const ctx = canvas.getContext('2d');
   let particles = [];
@@ -223,7 +253,6 @@
   }
   animateFireworks();
 
-  /* ---------- Button behavior ---------- */
   const btn = document.getElementById('wishBtn');
   const nextBtn = document.getElementById('nextBtn');
   const gif = document.getElementById('birthdayGif');
@@ -232,7 +261,6 @@
     btn.disabled = true;
     setTimeout(() => btn.disabled = false, 6000);
 
-    // Fireworks burst
     for (let i = 0; i < 25; i++) {
       setTimeout(() => {
         createFirework(
@@ -242,19 +270,16 @@
       }, i * 200);
     }
 
-    // Show GIF
     gif.style.display = 'block';
     gif.style.opacity = 0;
     gif.style.transition = 'opacity 400ms ease';
     setTimeout(() => { gif.style.opacity = 1; }, 50);
 
-    // Hide GIF after 5 seconds
     setTimeout(() => {
       gif.style.opacity = 0;
       setTimeout(() => { gif.style.display = 'none'; }, 500);
     }, 5000);
 
-    // Show "Next" button after GIF appears
     setTimeout(() => {
       nextBtn.style.display = 'inline-block';
     }, 1000);
